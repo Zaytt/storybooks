@@ -4,10 +4,10 @@ const path      = require('path');
 const mongoose  = require('mongoose');
 const passport  = require('passport');
 const session   = require('express-session');
-const flash     = require('express-flash-messages');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
+
 
 
 const app = express();
@@ -16,7 +16,7 @@ const app = express();
 const keys  = require('./config/keys');
 
 /* --------------- LOAD HANDLEBARS HELPERS --------------- */
-const {truncate, stripHTMLTags, formatDate, select, editIcon } = require('./helpers/hbs');
+const {truncate, stripHTMLTags, formatDate, select, editIcon, compare} = require('./helpers/hbs');
 
 /* --------------- LOAD MODELS --------------- */
 require('./models/User');
@@ -40,9 +40,6 @@ mongoose.connect(keys.mongoURI, {
   .catch( err => console.log(err))
 
 /* --------------- MIDDLEWARES --------------- */
-// Flash Messages
-app.use(flash());
-
 // Method Override Middleware
 app.use(methodOverride('_method'));
 
@@ -53,12 +50,13 @@ app.use(bodyParser.json()) // parse application/json
 
 // Handlebars
 app.engine('handlebars', exphbs({
-  helpers: {truncate, stripHTMLTags, formatDate, select, editIcon},
+  helpers: {truncate, stripHTMLTags, formatDate, select, editIcon, compare},
   defaultLayout: 'main'
-}))
+}));
+
+
 
 app.set('view engine', 'handlebars');
-
 app.use(cookieParser());
 
 app.use(session({

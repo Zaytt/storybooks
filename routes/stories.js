@@ -25,9 +25,50 @@ router.get('/show/:id', (req, res) => {
     .populate('user')
     .populate('comments.commentUser')
     .then(story => {
-      res.render('stories/show', { 
-        story : story 
-      });
+      // If its public, show it
+      if(story.status == "public" ){
+        res.render('stories/show', { 
+          story : story 
+        });
+      } else{
+        if(req.user){
+          // If logged in, and story belongs to user, show it, else redirect
+          if(req.user.id == story.user._id){
+            res.render('stories/show', { 
+              story : story 
+            });
+          } else {
+            res.redirect('/stories');
+          }
+        } else { 
+          // If not public and not logged in, redirect
+          res.redirect('/stories');
+        }
+      }
+      
+    })
+});
+
+// List Stories from a User
+router.get('/user/:userId', (req, res)=>{
+  Story.find({ 
+    user : req.params.userId, 
+    status : 'public'
+  })
+    .populate('user')
+    .then( stories => {
+      res.render('stories/index', { stories , storyUser: stories[0].user});
+    })
+});
+
+// List Stories from Looged in User
+router.get('/my', (req, res)=>{
+  Story.find({ 
+    user : req.user.id
+  })
+    .populate('user')
+    .then( stories => {
+      res.render('stories/index', { stories , storyUser: stories[0].user});
     })
 });
 
