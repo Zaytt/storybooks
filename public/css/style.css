@@ -1,0 +1,58 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.nav-wrapper .fa-bars{
+  font-size: 25px; 
+}
+
+footer{
+  margin-top: 20px;
+}
+
+#main-menu a{
+  font-size: 14px; 
+}
+
+#main-menu li{
+  margin-top: 10px;
+  margin-bottom: 10px;
+} 
+
+.story-text{
+  height: 140px;
+}
+
+.dash-status{
+  text-transform: capitalize;
+}
+
+#delete-form{
+  display: inline;
+}
+
+.card-action{
+  margin-bottom: 50px;
+}
+
+.comment-divider{
+  margin: 24px 0 10px 0;
+}
+
+@media only screen and (max-width: 850px) {
+  .story-text{
+    height: 200px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .story-text{
+    height: 50px;
+  }
+}

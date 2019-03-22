@@ -1,0 +1,32 @@
+<h1>Stories</h1>
+<div class="row">
+  {{#each stories}}
+    <div class="col s12 m4">
+      <div class="card story-card" >
+        <div class="card-image">
+          {{#if user}}
+            {{{editIcon user.id ../user.id id}}}
+          {{/if}}
+        </div>
+        <div class="card-content center-align">
+          <h5 class="story-title">{{title}}</h5>
+          <p class="story-text">{{stripHTMLTags (truncate body 150)}}</p>
+          <br>
+          <a href="/stories/user/{{story.user.id}}">
+            <div class="chip">
+              <img src={{user.image}} alt="User Image">
+              {{user.firstName}} {{user.lastName}}
+            </div>
+          </a>
+          <br>
+          <small>Published {{formatDate datePublish "MMMM Do YYYY"}}</small>
+        </div>
+      </div>
+      <div class="card-action center-align">
+        <a href="stories/show/{{id}}"><div class="btn red" ></i> Read story</div></a>
+      </div>
+    </div>
+  {{else}}
+    <p>No stories found</p>
+  {{/each}}
+</div>
